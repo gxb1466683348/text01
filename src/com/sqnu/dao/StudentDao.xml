@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sqnu.dao.StudentDao">
+
+    <select id="getById" resultType="student">
+
+    select * from tbs_student where id=#{id}
+
+    </select>
+
+    <insert id="save">
+
+        insert  into tbs_student(id,name,age) values(#{id},#{name},#{age})
+
+    </insert>
+
+    <select id="getAll" resultType="student">
+
+       select * from tbs_student
+
+    </select>
+    <select id="select1" parameterType="String" resultType="Student">
+
+        select * from tbs_student where id=#{id}
+    </select>
+
+    <select id="select2" parameterType="int" resultType="Student">
+
+         select * from tbs_student where age=#{age}
+
+    </select>
+
+    <!--<select id="select3" parameterType="" resultType="Student">
+
+        select * from tbs_student where name=#{name} and age=#{age}
+
+    </select>
+-->
+
+
+    <select id="select4" parameterType="Student" resultType="Student">
+
+        select * from tbs_student where name=#{name} and age=#{age}
+
+    </select>
+
+    <select id="select5" parameterType="map" resultType="Student">
+
+        select * from tbs_student where name=#{name} and age=#{age}
+
+    </select>
+
+
+
+    <select id="select17"   resultType="Student">
+
+        select  * from tbs_student
+
+        <where>
+            <if test="name!=null and name!=''">
+
+                name like '%' #{name} '%'
+
+            </if>
+            <if test="address!=null and address!=''">
+
+                and address like '%' #{address} '%'
+
+            </if>
+
+        </where>
+
+
+
+    </select>
+    
+    
+    <select id="select18" resultType="Student">
+        
+        select *from tbs_student
+        
+        where id in 
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        
+               
+    </select>
+
+    <sql id="sql1">
+        select * from tbs_student
+    </sql>
+
+    <select id="select19" resultType="Student">
+
+            <include refid="sql1"/>   where id=#{id}
+
+    </select>
+
+
+    <select id="select20" resultType="map">
+
+        select
+
+        s.name as sname,
+        c.name as cname
+
+        from tbs_student s
+        join tbs_classroom c
+        on s.classroomid=c.id
+
+    </select>
+
+
+    <select id="select21" resultType="com.sqnu.vo.StudentAndClassroomVo">
+
+    select
+    s.id as sid,
+    s.name as sname,
+    s.age as sage,
+    s.address as saddress,
+    c.id as cid,
+    c.name as cname
+    from tbs_student s
+    join tbs_classroom c
+    on s.classroomid = c.id
+
+
+    </select>
+
+    <select id="select22" resultType="com.sqnu.vo.StudentAndClassroomVo">
+
+    select
+    s.id as sid,
+    s.name as sname,
+    s.age as sage,
+    s.address as saddress,
+    c.id as cid,
+    c.name as cname
+    from tbs_student s
+    join tbs_classroom c
+    on s.classroomid = c.id
+
+    where s.name like '%' #{name}  '%' and c.name
+
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
